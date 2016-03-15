@@ -35,10 +35,10 @@ splitGroups <- function (allData) {
     return(allGroups)
 }
 
-singleGroupGraph <- function (allGroupsSplit, groupID == "J") {
+singleGroupGraph <- function (allGroupsSplit, groupID, connector) {
 
-    xlab="Input Voltage (V)"
-    ylab="Output Voltage (V)"
+    xlab = "Input Voltage (V)"
+    ylab = "Output Voltage (V)"
 
     
 
