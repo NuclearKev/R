@@ -108,14 +108,23 @@ getVIL <- function(member, connector){
                  VoltageOut < 0.4)
   return(max(low$VoltageIn))
 }
-
 getVIH <- function(member, connector){
   high <- subset(member, JconnectorID == connector & UpDown == "up" & 
                  VoltageOut > 2.9)
   return(min(high$VoltageIn))
 }
 
-graphAllGroups <- function (allData, connector, dir) { #dir is direction
+getAllVIL <- function(member){
+  connectors <- paste(unique(member["JconnectorID"])$JconnectorID)
+  return(Map(function(conn) getVIL(member, conn), connectors))
+}
+getAllVIH <- function(member){
+  connectors <- paste(unique(member["JconnectorID"])$JconnectorID)
+  return(Map(function(conn) getVIH(member, conn), connectors))
+}
+
+
+graphAllGroups <- function (member, connector, dir) { #dir is direction
 
     xlab = "Input Voltage (V)"
     ylab = "Output Voltage (V)"
