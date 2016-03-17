@@ -151,6 +151,15 @@ getMeanVIH <- function(member){
   return(m)
 }
 
+getPercentErrorsVIL <- function(member){
+  vil <- mapAllVIL(member)
+  return(abs(vil-vILDataSheet)/vILDataSheet)
+}
+getPercentErrorsVIH <- function(member){
+  vil <- mapAllVIH(member)
+  return(abs(vil-vIHDataSheet)/vIHDataSheet)
+}
+
 # Get the standard deviation for member
 getSdVIL <- function(member){
   return(sd(mapAllVIL(member)))
