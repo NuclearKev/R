@@ -117,13 +117,24 @@ getVIH <- function(member, connector){
   return(min(high$VoltageIn))
 }
 
+# gets all VIL for the member
 getAllVIL <- function(member){
   connectors <- paste(unique(member["JconnectorID"])$JconnectorID)
   return(Map(function(conn) getVIL(member, conn), connectors))
 }
+# gets all VIH for the member
 getAllVIH <- function(member){
   connectors <- paste(unique(member["JconnectorID"])$JconnectorID)
   return(Map(function(conn) getVIH(member, conn), connectors))
+}
+
+# gets all VIL for all members
+getVILAllMembers <- function(allMembers){
+  Map(function(member) getAllVIL(member), allMembers)
+}
+# gets all VIH for all members
+getVIHAllMembers <- function(allMembers){
+  Map(function(member) getAllVIH(member), allMembers)
 }
 
 
