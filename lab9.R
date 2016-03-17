@@ -51,6 +51,15 @@ getMembers <- function(groups) {
   }, groups)
 }
 
+# Gets the members from all data; output in form of:
+# members$member
+flatMembers <- function(allData){
+  members <- paste(unique(allData["BoardID"])$BoardID)
+  return(Map(function(member){ 
+    return(subset(allData, BoardID == member))
+  }, members))
+}
+
 # Graphs a single connector
 singleGroupGraph <- function (member, connector) {
     xlab = "Input Voltage (V)"
