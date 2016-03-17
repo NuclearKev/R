@@ -151,10 +151,10 @@ getMeanVIH <- function(member){
   return(m)
 }
 
+# Get the standard deviation for member
 getSdVIL <- function(member){
   return(sd(mapAllVIL(member)))
 }
-
 getSdVIH <- function(member){
   return(sd(mapAllVIH(member)))
 }
@@ -174,13 +174,25 @@ getAllMeansVIL <- function(allMembers){
 getAllMeansVIH <- function(allMembers){
   Map(function(member) getMeanVIH(member), allMembers)
 }
+getAllMeans <- function(allMembers){
+  return(Map(function(member){
+    return(list(VIL = getMeanVIL(member),
+                HIL = getMeanVIH(member)))
+  }, allMembers))
+}
+
 getAllSdVIL <- function(allMembers){
   Map(function(member) getSdVIL(member), allMembers)
 }
 getAllSdVIH <- function(allMembers){
   Map(function(member) getSdVIL(member), allMembers)
 }
-
+getAllSd <- function(allMembers){
+  return(Map(function(member){
+    return(list(VIL = getSdVIL(member),
+                HIL = getSdVIH(member)))
+  }, allMembers))
+}
 
 graphAllGroups <- function (members, connector, dir) { #dir is direction
 
