@@ -151,6 +151,14 @@ getMeanVIH <- function(member){
   return(m)
 }
 
+getSdVIL <- function(member){
+  return(sd(mapAllVIL(member)))
+}
+
+getSdVIH <- function(member){
+  return(sd(mapAllVIH(member)))
+}
+
 # gets all VIL for all members
 getVILAllMembers <- function(allMembers){
   Map(function(member) getAllVIL(member), allMembers)
@@ -165,6 +173,12 @@ getAllMeansVIL <- function(allMembers){
 }
 getAllMeansVIH <- function(allMembers){
   Map(function(member) getMeanVIH(member), allMembers)
+}
+getAllSdVIL <- function(allMembers){
+  Map(function(member) getSdVIL(member), allMembers)
+}
+getAllSdVIH <- function(allMembers){
+  Map(function(member) getSdVIL(member), allMembers)
 }
 
 
