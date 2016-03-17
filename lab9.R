@@ -30,6 +30,8 @@ names <- c("Group A",
            "Group M", 
            "Group N")
 
+# Splits all the groups. Output in form of:
+#  var$groupID
 getGroups <- function(allData){
   groups <- paste(unique(allData["GroupID"])$GroupID)
   return(Map(function(group){ 
@@ -37,6 +39,9 @@ getGroups <- function(allData){
   }, groups))
 }
 
+# Splits the members in every group expects you to have called getGroups 
+# before, output in form of:
+# var$groupID$member
 getMembers <- function(groups) {
   Map(function(group) {
     groupMembers <- paste(unique(group["BoardID"])$BoardID)
@@ -46,6 +51,7 @@ getMembers <- function(groups) {
   }, groups)
 }
 
+# Graphs a single connector
 singleGroupGraph <- function (member, connector) {
     xlab = "Input Voltage (V)"
     ylab = "Output Voltage (V)"
@@ -81,6 +87,9 @@ singleGroupGraph <- function (member, connector) {
           type = "l", pch = 19)
     lines(y = c(0,3.3), x = c(vIHDataSheet, vIHDataSheet), col = colors[8],
           type = "l", pch = 19)
+
+  names <- c("Down", "Up");
+  legend(0, 3.3, names, col=c(colors[1], colors[5]), pch=19)
 
     return("Success!")
 }
