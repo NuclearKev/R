@@ -72,7 +72,7 @@ singleGroupGraph <- function (member, connector) {
                   xlab = xlab,
                   ylab = ylab,
                   main = paste("Output Voltage vs Input Voltage (", 
-                               connector, ")"))
+                               connector, ")", sep=""))
 
     lines(y = down$VoltageOut, x = down$VoltageIn, col = colors[1],
           type = "p", pch = 19)
