@@ -96,3 +96,15 @@ singleGroupGraph <- function (member, connector) {
 
 vILDataSheet <- 0.800
 vIHDataSheet <- 2.000
+
+getVIL <- function(member, connector){
+  low <- subset(member, JconnectorID == connector & UpDown == "down" & 
+                 VoltageOut < 0.4)
+  return(max(low$VoltageIn))
+}
+
+getVIH <- function(member, connector){
+  high <- subset(member, JconnectorID == connector & UpDown == "up" & 
+                 VoltageOut > 2.9)
+  return(min(high$VoltageIn))
+}
