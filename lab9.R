@@ -30,7 +30,6 @@ names <- c("Group A",
            "Group M", 
            "Group N")
 
-## I don't use this one
 getGroups <- function(allData){
   groups <- paste(unique(allData["GroupID"])$GroupID)
   return(Map(function(group){ 
@@ -59,19 +58,32 @@ singleGroupGraph <- function (member, connector) {
     xlim <- c(min(up$VoltageIn), max(up$VoltageIn))
     ylim <- c(min(up$VoltageOut), max(up$VoltageOut))
 
-    graph <- plot(x=down$VoltageIn, 
+    graph <- plot(x=NULL,
                   y=NULL,
                   type = "p",
-                  xlim = xlim, 
-                  ylim = ylim,
+                  xlim = c(0, 3.3), 
+                  ylim = c(0, 3.3),
                   xlab = xlab,
                   ylab = ylab,
-                  main = "Output Voltage vs Input Voltage")
+                  main = paste("Output Voltage vs Input Voltage (", 
+                               connector, ")"))
 
     lines(y = down$VoltageOut, x = down$VoltageIn, col = colors[1],
           type = "p", pch = 19)
-    lines(y = up$VoltageOut, x = up$VoltageIn, col = colors[2],
+    lines(y = up$VoltageOut, x = up$VoltageIn, col = colors[5],
           type = "p", pch = 19)
+    lines(y = down$VoltageOut, x = down$VoltageIn, col = colors[2],
+          type = "l", pch = 19)
+    lines(y = up$VoltageOut, x = up$VoltageIn, col = colors[2],
+          type = "l", pch = 19)
+    #From datasheet
+    lines(y = c(0,3.3), x = c(vILDataSheet, vILDataSheet), col = colors[8],
+          type = "l", pch = 19)
+    lines(y = c(0,3.3), x = c(vIHDataSheet, vIHDataSheet), col = colors[8],
+          type = "l", pch = 19)
 
     return("Success!")
 }
+
+vILDataSheet <- 0.800
+vIHDataSheet <- 2.000
