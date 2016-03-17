@@ -128,19 +128,30 @@ getAllVIH <- function(member){
   return(Map(function(conn) getVIH(member, conn), connectors))
 }
 
+# Cleans up the getAllVIL
+mapAllVIL <- function(member){
+  vils <- getAllVIL(member)
+  realVILS <- Filter(function(vil) vil != -Inf & vil != Inf, vils)
+  return(do.call(cbind, realVILS))
+}
+# Cleans up the getAllVIH
+mapAllVIH <- function(member){
+  vihs <- getAllVIH(member)
+  realVIHS <- Filter(function(vih) vih != -Inf & vih != Inf, vihs)
+  return(do.call(cbind, realVIHS))
+}
+
 # Gets the mean VIL for member
 getMeanVIL <- function(member){
-  vils <- getAllVIL(member)
-  realVILS <- Filter(function(vil) vil != -Inf, vils)
-  mean <- mean(do.call(cbind, realVILS))
-  return(mean)
+  vils <- mapAllVIL(member)
+  m <- mean(vils)
+  return(m)
 }
 # Gets the mean VIH for member
 getMeanVIH <- function(member){
-  vils <- getAllVIH(member)
-  realVIHS <- Filter(function(vil) vil != -Inf, vils)
-  mean <- mean(do.call(cbind, realVIHS))
-  return(mean)
+  vils <- mapAllVIH(member)
+  m <- mean(vils)
+  return(m)
 }
 
 # gets all VIL for all members
