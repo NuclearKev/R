@@ -152,11 +152,13 @@ getMeanVIH <- function(member){
 }
 
 getPercentErrorsVIL <- function(member){
-  vil <- mapAllVIL(member)
+  vil <- getAllVIL(member)
+  vil <- do.call(cbind, vil)
   return(abs(vil-vILDataSheet)/vILDataSheet)
 }
 getPercentErrorsVIH <- function(member){
-  vil <- mapAllVIH(member)
+  vil <- getAllVIH(member)
+  vil <- do.call(cbind, vil)
   return(abs(vil-vIHDataSheet)/vIHDataSheet)
 }
 
@@ -175,6 +177,12 @@ getVILAllMembers <- function(allMembers){
 # gets all VIH for all members
 getVIHAllMembers <- function(allMembers){
   Map(function(member) getAllVIH(member), allMembers)
+}
+getAllV <- function(allMembers){
+  return(Map(function(member){
+    return(list(VIL = getAllVIL(member),
+                VIH = getAllVIH(member)))
+  }, allMembers))
 }
 
 getAllMeansVIL <- function(allMembers){
@@ -200,6 +208,13 @@ getAllSd <- function(allMembers){
   return(Map(function(member){
     return(list(VIL = getSdVIL(member),
                 HIL = getSdVIH(member)))
+  }, allMembers))
+}
+
+getAllError <- function(allMembers){
+  return(Map(function(member){
+    return(list(VIL = getPercentErrorsVIL(member),
+                VIH = getPercentErrorsVIH(member)))
   }, allMembers))
 }
 
