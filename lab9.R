@@ -7,8 +7,8 @@ add.alpha <- function(col, alpha=1){
 }
 
 colors <- c("antiquewhite4",
-            "burlywood4",
             "black",
+            "burlywood4",
             "azure4",
             "chocolate3",
             "chartreuse3",
@@ -17,7 +17,7 @@ colors <- c("antiquewhite4",
             "cadetblue3",
             "darkgoldenrod1")
 
-colors <- add.alpha(colors, alpha=0.1)
+colors <- add.alpha(colors, alpha=1.0)
 
 names <- c("Group A", 
            "Group B", 
@@ -36,20 +36,6 @@ getGroups <- function(allData){
   return(Map(function(group){ 
     return(subset(allData, GroupID == group))
   }, groups))
-}
-
-splitGroups <- function (allData) {
-    allGroups <- list(## A = subset(allData, GroupID=="A"),
-                      ## B = subset(allData, GroupID=="B"),
-                      ## C = subset(allData, GroupID=="C"),
-                      ## D = subset(allData, GroupID=="D"),
-                      ## E = subset(allData, GroupID=="E"),
-                      L = subset(allData, GroupID=="L"),
-                      J = subset(allData, GroupID=="J"))
-                      ## K = subset(allData, GroupID=="K"),
-                      ## M = subset(allData, GroupID=="M"),
-                      ## N = subset(allData, GroupID=="N"))
-    return(allGroups)
 }
 
 getMembers <- function(groups) {
