@@ -108,3 +108,11 @@ getVIH <- function(member, connector){
                  VoltageOut > 2.9)
   return(min(high$VoltageIn))
 }
+
+graphAllGroups <- function (member, connector, dir) { #dir is direction
+
+    xlab = "Input Voltage (V)"
+    ylab = "Output Voltage (V)"
+
+    
+}
