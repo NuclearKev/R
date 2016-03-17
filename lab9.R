@@ -161,36 +161,36 @@ getVIHAllMembers <- function(allMembers){
 }
 
 
-graphAllGroups <- function (member, connector, dir) { #dir is direction
+graphAllGroups <- function (members, connector, dir) { #dir is direction
 
-    xlab = "Input Voltage (V)"
-    ylab = "Output Voltage (V)"
+  xlab = "Input Voltage (V)"
+  ylab = "Output Voltage (V)"
 
-    getThisGuySomeKnots <- flatMembers(subset(allData,
-                                              JconnectorID==connector &
-                                              UpDown==dir))
-    
-    graph <- plot(x=NULL,
-                  y=NULL,
-                  type = "p",
-                  xlim = c(0, 3.3), 
-                  ylim = c(0, 3.3),
-                  xlab = xlab,
-                  ylab = ylab,
-                  main = paste("Output Voltage vs Input Voltage (", 
-                               connector, ")", sep=""))
-    i = 1
-    for (mem in getThisGuySomeKnots) {
-        lines(y = mem$VoltageOut, x = mem$VoltageIn, type = "p",
-              col = colors[i], pch = 19)
-        i = i + 1
-    }
+  getThisGuySomeKnots <- Map(function(member){
+    return(subset(member, JconnectorID==connector & UpDown==dir))
+  }, members)
 
-    lines(y = c(0,3.3), x = c(vILDataSheet, vILDataSheet), col = colors[8],
-          type = "l", pch = 19)
-    lines(y = c(0,3.3), x = c(vIHDataSheet, vIHDataSheet), col = colors[8],
-          type = "l", pch = 19)
+  graph <- plot(x=NULL,
+                y=NULL,
+                type = "p",
+                xlim = c(0, 3.3), 
+                ylim = c(0, 3.3),
+                xlab = xlab,
+                ylab = ylab,
+                main = paste("Output Voltage vs Input Voltage (", 
+                             connector, ")", sep=""))
+  i = 1
+  for (mem in getThisGuySomeKnots) {
+    lines(y = mem$VoltageOut, x = mem$VoltageIn, type = "p",
+          col = colors[i], pch = 19)
+    i = i + 1
+  }
 
-    
-    return("Success!")
+  lines(y = c(0,3.3), x = c(vILDataSheet, vILDataSheet), col = colors[8],
+        type = "l", pch = 19)
+  lines(y = c(0,3.3), x = c(vIHDataSheet, vIHDataSheet), col = colors[8],
+        type = "l", pch = 19)
+
+
+  return("Success!")
 }
