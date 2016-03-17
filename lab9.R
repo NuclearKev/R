@@ -177,8 +177,8 @@ graphAllGroups <- function (members, connector, dir) { #dir is direction
                 ylim = c(0, 3.3),
                 xlab = xlab,
                 ylab = ylab,
-                main = paste("Output Voltage vs Input Voltage (", 
-                             connector, ")", sep=""))
+                main = paste("Output Voltage vs Input Voltage for ",
+                             connector, " (", dir, ")", sep=""))
   i = 1
   for (mem in getThisGuySomeKnots) {
     lines(y = mem$VoltageOut, x = mem$VoltageIn, type = "p",
