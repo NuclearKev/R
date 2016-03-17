@@ -97,7 +97,7 @@ singleGroupGraph <- function (member, connector) {
   names <- c("Down", "Up");
   legend(0, 3.3, names, col=c(colors[1], colors[5]), pch=19)
 
-    Return("Success!")
+  return("Success!")
 }
 
 vILDataSheet <- 0.800
@@ -158,6 +158,13 @@ getVILAllMembers <- function(allMembers){
 # gets all VIH for all members
 getVIHAllMembers <- function(allMembers){
   Map(function(member) getAllVIH(member), allMembers)
+}
+
+getAllMeansVIL <- function(allMembers){
+  Map(function(member) getMeanVIL(member), allMembers)
+}
+getAllMeansVIH <- function(allMembers){
+  Map(function(member) getMeanVIH(member), allMembers)
 }
 
 
