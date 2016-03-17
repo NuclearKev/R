@@ -147,7 +147,13 @@ graphAllGroups <- function (member, connector, dir) { #dir is direction
         lines(y = mem$VoltageOut, x = mem$VoltageIn, type = "p",
               col = colors[i], pch = 19)
         i = i + 1
-        }
+    }
 
+    lines(y = c(0,3.3), x = c(vILDataSheet, vILDataSheet), col = colors[8],
+          type = "l", pch = 19)
+    lines(y = c(0,3.3), x = c(vIHDataSheet, vIHDataSheet), col = colors[8],
+          type = "l", pch = 19)
+
+    
     return("Success!")
 }
