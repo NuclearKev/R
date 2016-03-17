@@ -70,9 +70,6 @@ singleGroupGraph <- function (member, connector) {
     up <- subset(member, JconnectorID == connector &
                         UpDown == "up")
     
-    xlim <- c(min(up$VoltageIn), max(up$VoltageIn))
-    ylim <- c(min(up$VoltageOut), max(up$VoltageOut))
-
     graph <- plot(x=NULL,
                   y=NULL,
                   type = "p",
@@ -100,7 +97,7 @@ singleGroupGraph <- function (member, connector) {
   names <- c("Down", "Up");
   legend(0, 3.3, names, col=c(colors[1], colors[5]), pch=19)
 
-    return("Success!")
+    Return("Success!")
 }
 
 vILDataSheet <- 0.800
@@ -118,10 +115,30 @@ getVIH <- function(member, connector){
   return(min(high$VoltageIn))
 }
 
-graphAllGroups <- function (member, connector, dir) { #dir is direction
+graphAllGroups <- function (allData, connector, dir) { #dir is direction
 
     xlab = "Input Voltage (V)"
     ylab = "Output Voltage (V)"
 
+    getThisGuySomeKnots <- flatMembers(subset(allData,
+                                              JconnectorID==connector &
+                                              UpDown==dir))
     
+    graph <- plot(x=NULL,
+                  y=NULL,
+                  type = "p",
+                  xlim = c(0, 3.3), 
+                  ylim = c(0, 3.3),
+                  xlab = xlab,
+                  ylab = ylab,
+                  main = paste("Output Voltage vs Input Voltage (", 
+                               connector, ")", sep=""))
+    i = 1
+    for (mem in getThisGuySomeKnots) {
+        lines(y = mem$VoltageOut, x = mem$VoltageIn, type = "p",
+              col = colors[i], pch = 19)
+        i = i + 1
+        }
+
+    return("Success!")
 }
