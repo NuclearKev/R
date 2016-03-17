@@ -114,6 +114,14 @@ getVIH <- function(member, connector){
   return(min(high$VoltageIn))
 }
 
+getHyst <- function(member, connector){
+  down <- subset(member, JconnectorID == connector & UpDown == "down" & 
+                 VoltageOut > 2.9)
+  down <- min(down$VoltageIn)
+  up <- getVIH(member, connector)
+  return(up-down)
+}
+
 # gets all VIL for the member
 getAllVIL <- function(member){
   connectors <- paste(unique(member["JconnectorID"])$JconnectorID)
@@ -123,6 +131,11 @@ getAllVIL <- function(member){
 getAllVIH <- function(member){
   connectors <- paste(unique(member["JconnectorID"])$JconnectorID)
   return(Map(function(conn) getVIH(member, conn), connectors))
+}
+
+getAllHyst <- function(member){
+  connectors <- paste(unique(member["JconnectorID"])$JconnectorID)
+  return(Map(function(conn) getHyst(member, conn), connectors))
 }
 
 # Cleans up the getAllVIL
@@ -208,6 +221,12 @@ getAllSd <- function(allMembers){
   return(Map(function(member){
     return(list(VIL = getSdVIL(member),
                 HIL = getSdVIH(member)))
+  }, allMembers))
+}
+
+getAllHystClass <- function(allMembers){
+  return(Map(function(member){
+    return(HIL = getAllHyst(member))
   }, allMembers))
 }
 
