@@ -9,6 +9,7 @@ colors <- c("antiquewhite4",
             "blue",
             "cadetblue3",
             "darkgoldenrod1")
+
 names <- c("Group A", 
            "Group B", 
            "Group C", 
@@ -21,42 +22,55 @@ names <- c("Group A",
            "Group N")
 
 ## I don't use this one
+getGroups <- function(allData){
+  groups <- paste(unique(allData["GroupID"])$GroupID)
+  return(Map(function(group){ 
+    return(subset(allData, GroupID == group))
+  }, groups))
+}
+
 splitGroups <- function (allData) {
-    allGroups <- list(## groupA = subset(allData, GroupID=="A"),
-                      ## groupB = subset(allData, GroupID=="B"),
-                      ## groupC = subset(allData, GroupID=="C"),
-                      ## groupD = subset(allData, GroupID=="D"),
-                      ## groupE = subset(allData, GroupID=="E"),
-                      groupJ = subset(allData, GroupID=="J"))
-                      ## groupK = subset(allData, GroupID=="K"),
-                      ## groupL = subset(allData, GroupID=="L"),
-                      ## groupM = subset(allData, GroupID=="M"),
-                      ## groupN = subset(allData, GroupID=="N"))
+    allGroups <- list(## A = subset(allData, GroupID=="A"),
+                      ## B = subset(allData, GroupID=="B"),
+                      ## C = subset(allData, GroupID=="C"),
+                      ## D = subset(allData, GroupID=="D"),
+                      ## E = subset(allData, GroupID=="E"),
+                      L = subset(allData, GroupID=="L"),
+                      J = subset(allData, GroupID=="J"))
+                      ## K = subset(allData, GroupID=="K"),
+                      ## M = subset(allData, GroupID=="M"),
+                      ## N = subset(allData, GroupID=="N"))
     return(allGroups)
 }
 
-singleGroupGraph <- function (allData, groupID, connector) {
+getMembers <- function(groups) {
+  Map(function(group) {
+    groupMembers <- paste(unique(group["BoardID"])$BoardID)
+    return(Map(function(member){ 
+      return(subset(group, BoardID == member))
+    }, groupMembers))
+  }, groups)
+}
 
+singleGroupGraph <- function (member, connector) {
     xlab = "Input Voltage (V)"
     ylab = "Output Voltage (V)"
 
-    person1Down <- subset(allData, GroupID == groupID &
-                                      JconnectorID == connector &
-                                      UpDown == "down")
-    person1Up <- subset(allData, GroupID == groupID &
-                                 JconnectorID == connector &
-                                 UpDown == "up")
+    down <- subset(member, JconnectorID == connector &
+                          UpDown == "down")
+    up <- subset(member, JconnectorID == connector &
+                        UpDown == "up")
     
-    xlim <- c(min(person1Up$VoltageIn), max(person1Up$VoltageIn))
-    ylim <- c(min(person1Up$VoltageOut), max(person1Up$VoltageOut))
+    xlim <- c(min(up$VoltageIn), max(up$VoltageIn))
+    ylim <- c(min(up$VoltageOut), max(up$VoltageOut))
 
-    graph <- plot(x=person1Down$VoltageIn, type = "p", xlim = xlim, ylim = ylim,
+    graph <- plot(x=down$VoltageIn, type = "p", xlim = xlim, ylim = ylim,
                   xlab = xlab, ylab = ylab,
                   main = "Output Voltage vs Input Voltage")
 
-    lines(y = person1Down$VoltageOut, x = person1Down$VoltageIn, col = "red",
+    lines(y = down$VoltageOut, x = down$VoltageIn, col = "red",
           type = "p", pch = 19)
-    lines(y = person1Up$VoltageOut, x = person1Up$VoltageIn, col = "blue",
+    lines(y = up$VoltageOut, x = up$VoltageIn, col = "blue",
           type = "p", pch = 19)
 
     return("Success!")
