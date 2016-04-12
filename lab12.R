@@ -86,3 +86,17 @@ getMin <- function(group, test){
   data <- subset(group, TestNumber == test)
   return(min(data$BulbTemperatureDegF))
 }
+
+getAboveBelow <- function(group, test){
+  data <- subset(group, TestNumber == test)
+  ab <- Map(function(temp){
+    if(temp>90){
+      return(1)
+    }else if(temp<90){
+      return (-1)
+    }else{
+      return (0)
+    }
+  }, data$BulbTemperatureDegF)
+  return(ab)
+}
