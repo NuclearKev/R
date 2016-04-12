@@ -71,24 +71,42 @@ graphSingleGroup <- function (group, testNumber = 1) {
     return("Success!");
 }
 
+## In order to get the room temperatures, you want group = groupT and test = 0
+## for the next few functions
 getSD <- function(group, test){
-  data <- subset(group, TestNumber == test)
-  return(sd(data$BulbTemperatureDegF))
+    data <- subset(group, TestNumber == test)
+    if(test == 0){
+        return(sd(data$RoomTemperatureDegF))
+    }else{
+        return(sd(data$BulbTemperatureDegF))
+    }
 }
 
 getMean <- function(group, test){
-  data <- subset(group, TestNumber == test)
-  return(mean(data$BulbTemperatureDegF))
+    data <- subset(group, TestNumber == test)
+    if(test == 0){
+        return(mean(data$RoomTemperatureDegF))
+    }else{
+        return(mean(data$BulbTemperatureDegF))
+    }
 }
 
 getMax <- function(group, test){
   data <- subset(group, TestNumber == test)
-  return(max(data$BulbTemperatureDegF))
+  if(test == 0){
+      return(max(data$RoomTemperatureDegF))
+  }else{
+      return(max(data$BulbTemperatureDegF))
+  }
 }
 
 getMin <- function(group, test){
   data <- subset(group, TestNumber == test)
-  return(min(data$BulbTemperatureDegF))
+  if(test == 0){
+      return(min(data$RoomTemperatureDegF))
+  }else{
+      return(min(data$BulbTemperatureDegF))
+  }
 }
 
 getAboveBelow <- function(group, test){
