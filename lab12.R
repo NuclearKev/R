@@ -8,6 +8,7 @@ add.alpha <- function(col, alpha=1){
 
 setAs("character","myDate", function(from) strptime(from, format="%m/%d/%Y %H:%M") )
 
+## Fixes issues with the datetime
 readData <- function(file){
   return(read.csv(file, 
     colClass=c('myDate', 
@@ -52,11 +53,11 @@ getGroups <- function(allData){
   }, groups))
 }
 
-fixDates <- function(allData){
-    return(cbind(allData, DateTime=Map(function(date){
-        return (strptime(date, format="%m/%d/%Y %H:%M"))
-    }, allData$DateTime)))
-}
+## fixDates <- function(allData){
+##     return(cbind(allData, DateTime=Map(function(date){
+##         return (strptime(date, format="%m/%d/%Y %H:%M"))
+##     }, allData$DateTime)))
+## }
 
 ## Use getGroups before running this function
 graphSingleGroup <- function (group, testNumber = 1) {
