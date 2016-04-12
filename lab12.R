@@ -40,9 +40,9 @@ getGroups <- function(allData){
 }
 
 fixDates <- function(allData){
-    return(Map(function(date){
-        return (strptime(date$DateTime, format="%m/%d/%Y %H:%M"))
-    }, allData))
+    return(cbind(allData, DateTime=Map(function(date){
+        return (strptime(date, format="%m/%d/%Y %H:%M"))
+    }, allData$DateTime)))
 }
 
 ## Use getGroups before running this function
@@ -66,6 +66,7 @@ graphSingleGroup <- function (group, testNumber = 1) {
           type = "p", pch = 19)
 
     return("Success!");
+}
 
 getSD <- function(group, test){
   data <- subset(group, TestNumber == test)
@@ -100,3 +101,4 @@ getAboveBelow <- function(group, test){
   }, data$BulbTemperatureDegF)
   return(ab)
 }
+ 
