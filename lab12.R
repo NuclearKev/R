@@ -132,6 +132,14 @@ getAboveBelow <- function(group, test){
                 datetime = data$DateTime)
   return(output)
 }
+
+#Returns on or off times in minutes
+#Set onOrOff to -1 for off times
+#Defualt is on time
+getOnTime <- function(group, test, onOrOff = 1){
+  data <- getAboveBelow(group, test)
+  return(length(Filter(function(onOff) onOff == onOrOff, data$bulb))*10/60)
+}
  
 graphAboveBelow <- function (group, testNumber = 1) {
   xlab <- "Time"
