@@ -1,9 +1,9 @@
 ## These arrays are used for graphing and the legend
 add.alpha <- function(col, alpha=1){
   if(missing(col))
-      stop("Please provide a vector of colours.")
+    stop("Please provide a vector of colours.")
   apply(sapply(col, col2rgb)/255, 2, function(x) 
-        rgb(x[1], x[2], x[3], alpha=alpha))  
+    rgb(x[1], x[2], x[3], alpha=alpha))  
 }
 
 setAs("character","myDate", function(from) strptime(from, format="%m/%d/%Y %H:%M") )
@@ -11,13 +11,13 @@ setAs("character","myDate", function(from) strptime(from, format="%m/%d/%Y %H:%M
 ## Fixes issues with the datetime
 readData <- function(file){
   return(read.csv(file, 
-    colClass=c('myDate', 
-               'character', 
-               'numeric', 
-               'numeric', 
-               'numeric')
-    )
-  )
+                  colClass=c('myDate', 
+                             'character', 
+                             'numeric', 
+                             'numeric', 
+                             'numeric')
+                  )
+         )
 }
 
 colors <- c("antiquewhite4",
@@ -44,8 +44,8 @@ names <- c("Group A",
            "Group M", 
            "Group N")
 
-# Splits all the groups. Output in form of:
-#  var$groupID
+                                        # Splits all the groups. Output in form of:
+                                        #  var$groupID
 getGroups <- function(allData){
   groups <- paste(unique(allData["GroupID"])$GroupID)
   return(Map(function(group){ 
@@ -61,62 +61,59 @@ getGroups <- function(allData){
 
 ## Use getGroups before running this function
 graphSingleGroup <- function (group, testNumber = 1) {
-    xlab <- "Time";
-    ylab <- "Temperature (F)"
+  xlab <- "Time"
+  ylab <- "Temperature (F)"
 
-    bulbTempData <- subset(group, TestNumber == testNumber);
+  bulbTempData <- subset(group, TestNumber == testNumber);
 
-    graph <- plot(x=NULL,
-                  y=NULL,
-                  type = "p",
-                  xlim = c(0, 3.3),
-                  ylim = c("4/7/2016 10:00", "4/8/2016 11:00"),
-                  xlab = xlab,
-                  ylab = ylab,
-                  main = paste("Output Voltage vs Input Voltage (", 
-                               connector, ")", sep=""))
+  graph <- plot(x=bulbTempData$DateTime,
+                y=bulbTempData$BulbTemperatureDegF,
+                type = "p",
+                xlab = xlab,
+                ylab = ylab,
+                main = paste("Bulb Temperature vs Time"))
 
-    lines(y = bulbTempData$BulbTemperatureDegF, x = bulbTempData$DateTime, col = colors[1],
-          type = "p", pch = 19)
+  lines(y = bulbTempData$BulbTemperatureDegF, x = bulbTempData$DateTime,
+        col = colors[1], type = "p", pch = 19)
 
-    return("Success!");
+  return("Success!");
 }
 
 ## In order to get the room temperatures, you want group = groupT and test = 0
 ## for the next few functions
 getSD <- function(group, test){
-    data <- subset(group, TestNumber == test)
-    if(test == 0){
-        return(sd(data$RoomTemperatureDegF))
-    }else{
-        return(sd(data$BulbTemperatureDegF))
-    }
+  data <- subset(group, TestNumber == test)
+  if(test == 0){
+    return(sd(data$RoomTemperatureDegF))
+  }else{
+    return(sd(data$BulbTemperatureDegF))
+  }
 }
 
 getMean <- function(group, test){
-    data <- subset(group, TestNumber == test)
-    if(test == 0){
-        return(mean(data$RoomTemperatureDegF))
-    }else{
-        return(mean(data$BulbTemperatureDegF))
-    }
+  data <- subset(group, TestNumber == test)
+  if(test == 0){
+    return(mean(data$RoomTemperatureDegF))
+  }else{
+    return(mean(data$BulbTemperatureDegF))
+  }
 }
 
 getMax <- function(group, test){
   data <- subset(group, TestNumber == test)
   if(test == 0){
-      return(max(data$RoomTemperatureDegF))
+    return(max(data$RoomTemperatureDegF))
   }else{
-      return(max(data$BulbTemperatureDegF))
+    return(max(data$BulbTemperatureDegF))
   }
 }
 
 getMin <- function(group, test){
   data <- subset(group, TestNumber == test)
   if(test == 0){
-      return(min(data$RoomTemperatureDegF))
+    return(min(data$RoomTemperatureDegF))
   }else{
-      return(min(data$BulbTemperatureDegF))
+    return(min(data$BulbTemperatureDegF))
   }
 }
 
@@ -133,4 +130,4 @@ getAboveBelow <- function(group, test){
   }, data$BulbTemperatureDegF)
   return(ab)
 }
- 
+
