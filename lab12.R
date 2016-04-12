@@ -7,7 +7,17 @@ add.alpha <- function(col, alpha=1){
 }
 
 setAs("character","myDate", function(from) strptime(from, format="%m/%d/%Y %H:%M") )
-read.csv("dataLab12.csv", colClass=c('myDate', 'character', 'numeric', 'numeric', 'numeric'))
+
+readData <- function(file){
+  return(read.csv(file, 
+    colClass=c('myDate', 
+               'character', 
+               'numeric', 
+               'numeric', 
+               'numeric')
+    )
+  )
+}
 
 colors <- c("antiquewhite4",
             "black",
