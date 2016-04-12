@@ -6,6 +6,9 @@ add.alpha <- function(col, alpha=1){
         rgb(x[1], x[2], x[3], alpha=alpha))  
 }
 
+setAs("character","myDate", function(from) strptime(from, format="%m/%d/%Y %H:%M") )
+read.csv("dataLab12.csv", colClass=c('myDate', 'character', 'numeric', 'numeric', 'numeric'))
+
 colors <- c("antiquewhite4",
             "black",
             "burlywood4",
