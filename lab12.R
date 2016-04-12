@@ -42,6 +42,35 @@ getGroups <- function(allData){
   }, groups))
 }
 
+fixDates <- function(allData){
+    return(cbind(allData, DateTime=Map(function(date){
+        return (strptime(date, format="%m/%d/%Y %H:%M"))
+    }, allData$DateTime)))
+}
+
+## Use getGroups before running this function
+graphSingleGroup <- function (group, testNumber = 1) {
+    xlab <- "Time";
+    ylab <- "Temperature (F)"
+
+    bulbTempData <- subset(group, TestNumber == testNumber);
+
+    graph <- plot(x=NULL,
+                  y=NULL,
+                  type = "p",
+                  xlim = c(0, 3.3),
+                  ylim = c("4/7/2016 10:00", "4/8/2016 11:00"),
+                  xlab = xlab,
+                  ylab = ylab,
+                  main = paste("Output Voltage vs Input Voltage (", 
+                               connector, ")", sep=""))
+
+    lines(y = bulbTempData$BulbTemperatureDegF, x = bulbTempData$DateTime, col = colors[1],
+          type = "p", pch = 19)
+
+    return("Success!");
+}
+
 getSD <- function(group, test){
   data <- subset(group, TestNumber == test)
   return(sd(data$BulbTemperatureDegF))
@@ -75,3 +104,4 @@ getAboveBelow <- function(group, test){
   }, data$BulbTemperatureDegF)
   return(ab)
 }
+ 
