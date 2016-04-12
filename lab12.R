@@ -137,6 +137,35 @@ getAboveBelow <- function(group, test){
       return (0)
     }
   }, data$BulbTemperatureDegF)
-  return(ab)
+  output = list(bulb = ab,
+                datetime = data$DateTime)
+  return(output)
 }
 
+#Returns on or off times in minutes
+#Set onOrOff to -1 for off times
+#Defualt is on time
+getOnTime <- function(group, test, onOrOff = 1){
+  data <- getAboveBelow(group, test)
+  return(length(Filter(function(onOff) onOff == onOrOff, data$bulb))*10/60)
+}
+ 
+graphAboveBelow <- function (group, testNumber = 1) {
+  xlab <- "Time"
+  ylab <- "Temperature (F)"
+
+  data <- getAboveBelow(group, testNumber)
+
+  graph <- plot(x=data$datetime,
+                y=data$bulb,
+                type = "p",
+                xlab = xlab,
+                ylab = ylab,
+                main = paste("Bulb Temperature vs Time ( run", testNumber, ")", 
+                             sep=""))
+
+  lines(y = data$bulb, x = data$datetime,
+        col = colors[1], type = "p", pch = 19)
+
+  return("Success!");
+}
