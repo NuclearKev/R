@@ -67,4 +67,22 @@ graphSingleGroup <- function (group, testNumber = 1) {
 
     return("Success!");
 
+getSD <- function(group, test){
+  data <- subset(group, TestNumber == test)
+  return(sd(data$BulbTemperatureDegF))
+}
+
+getMean <- function(group, test){
+  data <- subset(group, TestNumber == test)
+  return(mean(data$BulbTemperatureDegF))
+}
+
+getMax <- function(group, test){
+  data <- subset(group, TestNumber == test)
+  return(max(data$BulbTemperatureDegF))
+}
+
+getMin <- function(group, test){
+  data <- subset(group, TestNumber == test)
+  return(min(data$BulbTemperatureDegF))
 }
