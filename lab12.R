@@ -70,20 +70,19 @@ graphSingleGroup <- function (allGroups, group, testNumber = 1) {
 
   roomTempData <- subset(allGroups$T, DateTime >= minTime & DateTime <= maxTime);
 
-  graph <- plot(x=NULL,
-                y=NULL,
+  graph <- plot(y=bulbTempData$BulbTemperatureDegF,
+                x=bulbTempData$DateTime,
                 type = "p",
-                xlim = c(minTime, maxTime),
-                ylim = c(80, 95),
+                pch = 19,
+                col = colors[1],
+                ylim = c(75, 92),
                 xlab = xlab,
                 ylab = ylab,
                 main = paste("Bulb Temperature vs Time of Day (Run ",
                              testNumber, ")", sep=""))
 
-  ## lines(y = bulbTempData$BulbTemperatureDegF, x = bulbTempData$DateTime,
-  ##       col = colors[1], type = "p", pch = 19)
   lines(y = roomTempData$RoomTemperatureDegF, x = roomTempData$DateTime,
-        col = "blue", type = "p", pch = 19)
+        col = colors[8], type = "p", pch = 19)
 
   return("Success!");
 }
@@ -156,16 +155,20 @@ graphAboveBelow <- function (group, testNumber = 1) {
 
   data <- getAboveBelow(group, testNumber)
 
+  xlims = c(min(data$datetime), max(data$datetime))
+  ylims = c(-1, 1)
+
   graph <- plot(x=data$datetime,
                 y=data$bulb,
                 type = "p",
                 xlab = xlab,
                 ylab = ylab,
-                main = paste("Bulb Temperature vs Time ( run", testNumber, ")", 
+                xlims = xlims,
+                ylims = ylims,
+                pch = 19,
+                col = colors[1],
+                main = paste("Bulb Temperature vs Time (run ", testNumber, ")", 
                              sep=""))
-
-  lines(y = data$bulb, x = data$datetime,
-        col = colors[1], type = "p", pch = 19)
 
   return("Success!");
 }
