@@ -60,21 +60,30 @@ getGroups <- function(allData){
 ## }
 
 ## Use getGroups before running this function
-graphSingleGroup <- function (group, testNumber = 1) {
-  xlab <- "Time"
+graphSingleGroup <- function (allGroups, group, testNumber = 1) {
+  xlab <- "Time (Hour of day)"
   ylab <- "Temperature (F)"
 
   bulbTempData <- subset(group, TestNumber == testNumber);
+  minTime <- min(bulbTempData$DateTime);
+  maxTime <- max(bulbTempData$DateTime);
 
-  graph <- plot(x=bulbTempData$DateTime,
-                y=bulbTempData$BulbTemperatureDegF,
+  roomTempData <- subset(allGroups$T, DateTime >= minTime & DateTime <= maxTime);
+
+  graph <- plot(x=NULL,
+                y=NULL,
                 type = "p",
+                xlim = c(minTime, maxTime),
+                ylim = c(80, 95),
                 xlab = xlab,
                 ylab = ylab,
-                main = paste("Bulb Temperature vs Time"))
+                main = paste("Bulb Temperature vs Time of Day (Run ",
+                             testNumber, ")", sep=""))
 
-  lines(y = bulbTempData$BulbTemperatureDegF, x = bulbTempData$DateTime,
-        col = colors[1], type = "p", pch = 19)
+  ## lines(y = bulbTempData$BulbTemperatureDegF, x = bulbTempData$DateTime,
+  ##       col = colors[1], type = "p", pch = 19)
+  lines(y = roomTempData$RoomTemperatureDegF, x = roomTempData$DateTime,
+        col = "blue", type = "p", pch = 19)
 
   return("Success!");
 }
