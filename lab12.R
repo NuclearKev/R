@@ -30,11 +30,11 @@ names <- c("Group A",
            "Group M", 
            "Group N")
 
-# Gets the members from all data; output in form of:
-# members$member
-flatMembers <- function(allData){
-  members <- paste(unique(allData["BoardID"])$BoardID)
-  return(Map(function(member){ 
-    return(subset(allData, BoardID == member))
-  }, members))
+# Splits all the groups. Output in form of:
+#  var$groupID
+getGroups <- function(allData){
+  groups <- paste(unique(allData["GroupID"])$GroupID)
+  return(Map(function(group){ 
+    return(subset(allData, GroupID == group))
+  }, groups))
 }
