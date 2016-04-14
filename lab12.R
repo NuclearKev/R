@@ -69,13 +69,14 @@ graphSingleGroup <- function (allGroups, group, testNumber = 1) {
   maxTime <- max(bulbTempData$DateTime);
 
   roomTempData <- subset(allGroups$T, DateTime >= minTime & DateTime <= maxTime);
+  minT = min(roomTempData$RoomTemperatureDegF)
 
   graph <- plot(y=bulbTempData$BulbTemperatureDegF,
                 x=bulbTempData$DateTime,
                 type = "p",
                 pch = 19,
                 col = colors[1],
-                ylim = c(75, 92),
+                ylim = c(minT, 92),
                 xlab = xlab,
                 ylab = ylab,
                 main = paste("Bulb Temperature vs Time of Day (Run ",
