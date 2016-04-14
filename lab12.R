@@ -88,21 +88,22 @@ graphSingleGroup <- function (allGroups, group, testNumber = 1) {
   return("Success!");
 }
 
-graphAll <- function (allData, allGroups, testNumber=1) {
+graphAll <- function (allGroups) {
   xlab <- "Time (Hour of day)"
   ylab <- "Temperature (F)"
 
-  graph <- plot(y=allData$BulbTemperatureDegF,
-                x=allData$DateTime,
+  graph <- plot(y=allGroups$T$RoomTemperatureDegF,
+                x=allGroups$T$DateTime,
                 type = "p",
                 pch = 19,
+                ylim = c(70, 95),
                 xlab = xlab,
                 ylab = ylab,
-                main = paste("Bulb Temperature vs Time of Day (Run ",
-                             testNumber, ")", sep=""))
+                main = paste("Bulb Temperature vs Time of Day for all Groups"))
+                             
 
     i = 1
-    for (mem in allGroups) {
+    for (mem in FilterGroups(allGroups)) { # get rid of group T
         lines(y = mem$BulbTemperatureDegF, x = mem$DateTime, type = "p",
               col = colors[i], pch = 19)
         i = i + 1
