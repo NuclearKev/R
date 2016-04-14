@@ -136,7 +136,8 @@ getAll <- function(groups){
   allMax <- getAllGroups(groups, getMax)
   allMin <- getAllGroups(groups, getMin)
   allMean <- getAllGroups(groups, getMean)
-  return(list(max=allMax, min=allMin, mean=allMean))
+  allSD <- getAllGroups(groups, getSD)
+  return(list(max=allMax, min=allMin, mean=allMean, sd=allSD))
 }
 
 getMin <- function(group, test){
