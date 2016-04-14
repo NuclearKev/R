@@ -117,6 +117,28 @@ getMax <- function(group, test){
   }
 }
 
+getGroupSomething <- function(group, f){
+  return(list(a = f(group, 1),
+              b = f(group, 2)))
+}
+
+getAllGroups <- function(groups, f){
+  Map(function(group){
+    getGroupSomething(group, f)
+  }, FilterGroups(groups))
+}
+
+FilterGroups <- function(groups){
+  return(Filter(function(group) group$GroupID[1]!="T", groups))
+}
+
+getAll <- function(groups){
+  allMax <- getAllGroups(groups, getMax)
+  allMin <- getAllGroups(groups, getMin)
+  allMean <- getAllGroups(groups, getMean)
+  return(list(max=allMax, min=allMin, mean=allMean))
+}
+
 getMin <- function(group, test){
   data <- subset(group, TestNumber == test)
   if(test == 0){
