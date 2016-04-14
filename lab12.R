@@ -142,6 +142,28 @@ getMax <- function(group, test){
   }
 }
 
+getMin <- function(group, test){
+  data <- subset(group, TestNumber == test)
+  if(test == 0){
+    return(min(data$RoomTemperatureDegF))
+  }else{
+    return(min(data$BulbTemperatureDegF))
+  }
+}
+
+#Returns on or off times in minutes
+#Set onOrOff to -1 for off times
+#Defualt is on time
+getOnTime <- function(group, test, onOrOff = 1){
+  data <- getAboveBelow(group, test)
+  return(length(Filter(function(onOff) onOff == onOrOff, data$bulb))*10/60)
+}
+
+#Gets the off time in minutes
+getOffTime <- function(group, test){
+  return(getOnTime(group, test, -1))
+}
+
 getGroupSomething <- function(group, f){
   return(list(a = f(group, 1),
               b = f(group, 2)))
@@ -162,16 +184,15 @@ getAll <- function(groups){
   allMin <- getAllGroups(groups, getMin)
   allMean <- getAllGroups(groups, getMean)
   allSD <- getAllGroups(groups, getSD)
-  return(list(max=allMax, min=allMin, mean=allMean, sd=allSD))
-}
+  allOnTime <- getAllGroups(groups, getOnTime)
+  allOffTime <- getAllGroups(groups, getOffTime)
 
-getMin <- function(group, test){
-  data <- subset(group, TestNumber == test)
-  if(test == 0){
-    return(min(data$RoomTemperatureDegF))
-  }else{
-    return(min(data$BulbTemperatureDegF))
-  }
+  return(list(max=allMax, 
+              min=allMin,
+              mean=allMean,
+              sd=allSD,
+              onTime=allOnTime,
+              offTime=allOffTime))
 }
 
 getAboveBelow <- function(group, test){
@@ -188,14 +209,6 @@ getAboveBelow <- function(group, test){
   output = list(bulb = ab,
                 datetime = data$DateTime)
   return(output)
-}
-
-#Returns on or off times in minutes
-#Set onOrOff to -1 for off times
-#Defualt is on time
-getOnTime <- function(group, test, onOrOff = 1){
-  data <- getAboveBelow(group, test)
-  return(length(Filter(function(onOff) onOff == onOrOff, data$bulb))*10/60)
 }
  
 graphAboveBelow <- function (group, testNumber = 1) {
