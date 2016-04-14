@@ -96,7 +96,7 @@ graphAll <- function (allGroups) {
                 x=allGroups$T$DateTime,
                 type = "p",
                 pch = 19,
-                ylim = c(70, 95),
+                ylim = c(70, 92),
                 xlab = xlab,
                 ylab = ylab,
                 main = paste("Bulb Temperature vs Time of Day for all Groups"))
