@@ -88,6 +88,31 @@ graphSingleGroup <- function (allGroups, group, testNumber = 1) {
   return("Success!");
 }
 
+graphAll <- function (allGroups) {
+  xlab <- "Time (Hour of day)"
+  ylab <- "Temperature (F)"
+
+  graph <- plot(y=allGroups$T$RoomTemperatureDegF,
+                x=allGroups$T$DateTime,
+                type = "p",
+                pch = 19,
+                ylim = c(70, 95),
+                xlab = xlab,
+                ylab = ylab,
+                main = paste("Bulb Temperature vs Time of Day for all Groups"))
+                             
+
+    i = 1
+    for (mem in FilterGroups(allGroups)) { # get rid of group T
+        lines(y = mem$BulbTemperatureDegF, x = mem$DateTime, type = "p",
+              col = colors[i], pch = 19)
+        i = i + 1
+    }
+
+  return("Success!")
+}
+      
+
 ## In order to get the room temperatures, you want group = groupT and test = 0
 ## for the next few functions
 getSD <- function(group, test){
